@@ -28,8 +28,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - school_network
-    entrypoint: entrypoint
+      - school_network    
   
 networks:
   school_network:
