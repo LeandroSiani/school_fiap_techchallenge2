@@ -10,12 +10,21 @@ export class PostService {
     private postRepository: Repository<Post>,
   ) {}
 
-  async findAll(): Promise<Post[]> {
-    return this.postRepository.find();
+  async findAll(limit: number, page: number): Promise<Post[]> {
+    const offset = (page - 1) * limit;
+    return this.postRepository.find({
+      take: limit,
+      skip: offset,
+    });
   }
 
-  async findAllPublished(): Promise<Post[]> {
-    return this.postRepository.find({ where: { isPublished: true } });
+  async findAllPublished(limit: number, page: number): Promise<Post[]> {
+    const offset = (page - 1) * limit;
+    return this.postRepository.find({
+      where: { isPublished: true },
+      take: limit,
+      skip: offset,
+    });
   }
 
   async findOne(id: number): Promise<Post> {
