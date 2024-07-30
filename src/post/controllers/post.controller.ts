@@ -45,8 +45,8 @@ export class PostController {
 
   @Get()
   async findAllPublished(
-    @Query('limit') limit: number,
-    @Query('page') page: number,
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1,
   ) {
     return this.postService.findAllPublished(limit, page);
   }
@@ -54,7 +54,10 @@ export class PostController {
   @ApiBasicAuth()
   @UseGuards(BasicAuthGuard)
   @Get('admin')
-  async findAll(@Query('limit') limit: number, @Query('page') page: number) {
+  async findAll(
+    @Query('limit') limit: number = 10,
+    @Query('page') page: number = 1,
+  ) {
     return this.postService.findAll(limit, page);
   }
 
@@ -85,33 +88,33 @@ export class PostController {
 
   @ApiBasicAuth()
   @UseGuards(BasicAuthGuard)
-  @UsePipes(new ZodValidationPipe(postUpdateSchema))
   @Put(':id')
   async update(
-    @Body() { title, content, date, isPublished, publishDate }: PostUpdate,
-    @Param() id: number,
+    @Param('id') id: number,
+    @Body(new ZodValidationPipe(postUpdateSchema))
+    { title, content, date, isPublished, publishDate }: PostUpdate,
   ) {
     return this.postService.update(id, {
-      id: id,
       title,
       content,
       date,
       isPublished,
       publishDate,
+      id,
     });
   }
 
   @ApiBasicAuth()
   @UseGuards(BasicAuthGuard)
   @Put('publish/:id')
-  async publish(@Param() id: number) {
+  async publish(@Param('id') id: number) {
     return this.postService.publish(id);
   }
 
   @ApiBasicAuth()
   @UseGuards(BasicAuthGuard)
   @Delete(':id')
-  async remove(@Param() id: number) {
+  async remove(@Param('id') id: number) {
     return this.postService.remove(id);
   }
 }

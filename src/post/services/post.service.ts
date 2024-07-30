@@ -47,6 +47,7 @@ export class PostService {
   async publish(id: number): Promise<Post> {
     const post = await this.postRepository.findOneBy({ id });
     post.isPublished = true;
+    post.publishDate = new Date();
     return this.postRepository.save(post);
   }
 
