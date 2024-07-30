@@ -87,7 +87,7 @@ describe('PostController', () => {
     it('deve chamar o método update do serviço com o id e os parâmetros de atualização corretos', async () => {
       const dto = { title: 'Test', content: 'Content', isPublished: false, date: new Date(), publishDate: null };
       const id = 1;
-      await controller.update(dto, id);
+      await controller.update(id, dto);
       expect(service.update).toHaveBeenCalledWith(id, { id, ...dto });
     });
   });
