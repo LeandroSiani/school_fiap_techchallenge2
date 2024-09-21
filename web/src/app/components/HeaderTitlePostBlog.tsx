@@ -13,12 +13,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { usePathname } from "next/navigation";
+import { formatDateCustom } from "@/hook/formatedDate";
 
 interface HeaderTitlePostBlogProps {
   seePost?: boolean;
+  title: string;
+  publishDate: Date;
 }
 
-export default function HeaderTitlePostBlog({ seePost }: HeaderTitlePostBlogProps) {
+export default function HeaderTitlePostBlog({ seePost, title, publishDate }: HeaderTitlePostBlogProps) {
   const params = usePathname();
 
   return (
@@ -61,7 +64,7 @@ export default function HeaderTitlePostBlog({ seePost }: HeaderTitlePostBlogProp
 
       <div className="flex flex-col gap-2">
         <div className="flex items-start justify-between">
-          <h2 className="text-[#E7EDF4] text-2xl font-nunito font-bold">JavaScript data types and data structures</h2>
+          <h2 className="text-[#E7EDF4] text-2xl font-nunito font-bold">{title}</h2>
         </div>
 
         <div className="flex items-center gap-8">
@@ -71,7 +74,7 @@ export default function HeaderTitlePostBlog({ seePost }: HeaderTitlePostBlogProp
           </div>
           <div className="flex items-center gap-2">
             <CalendarDot size={18} color="#3A536B" />
-            <p className="text-[#7B96B2] text-base font-nunito ">Há 1 dia</p>
+            <p className="text-[#7B96B2] text-base font-nunito ">{formatDateCustom(publishDate)}</p>
           </div>
           {seePost && (
             <div className="flex items-center gap-2">

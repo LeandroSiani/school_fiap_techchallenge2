@@ -3,7 +3,6 @@ interface searchPostProps {
 }
 
 export default function SearchPost({ qtyPost }: searchPostProps) {
-  console.log("🚀 ~ SearchPost ~ qtyPost:", qtyPost);
   return (
     <div className="w-full max-w-5xl m-auto mt-[72px] flex flex-col gap-3">
       <div className="flex items-center justify-between">

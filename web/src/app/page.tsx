@@ -5,7 +5,7 @@ import Post from "./components/Post";
 import { IPost } from "./@types/post.interface";
 
 export default async function Home() {
-  const data = await fetch("http://localhost:3000/posts", { cache: "force-cache" });
+  const data = await fetch("http://localhost:3000/posts", { cache: "no-cache" });
   const posts = await data.json();
 
   return (
