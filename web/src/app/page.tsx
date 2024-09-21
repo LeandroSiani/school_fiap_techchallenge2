@@ -1,10 +1,13 @@
-import Image from "next/image";
 import Header from "./components/header";
 import CardGithubDevs from "./components/cardGithubDevs";
 import SearchPost from "./components/searchPost";
 import Post from "./components/Post";
+import { IPost } from "./@types/post.interface";
 
-export default function Home() {
+export default async function Home() {
+  const data = await fetch("http://localhost:3000/posts", { cache: "force-cache" });
+  const posts = await data.json();
+
   return (
     <div className="">
       <Header />
@@ -12,13 +15,12 @@ export default function Home() {
       <main className="w-full ">
         <CardGithubDevs />
 
-        <SearchPost />
+        <SearchPost qtyPost={posts?.length} />
 
         <div className="w-full max-w-5xl m-auto mt-12 grid grid-cols-2 gap-8 pb-12">
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          {posts?.map((post: IPost) => (
+            <Post key={post.id} {...post} />
+          ))}
         </div>
       </main>
     </div>

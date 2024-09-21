@@ -1,9 +1,16 @@
-export default function SearchPost() {
+interface searchPostProps {
+  qtyPost: number;
+}
+
+export default function SearchPost({ qtyPost }: searchPostProps) {
+  console.log("🚀 ~ SearchPost ~ qtyPost:", qtyPost);
   return (
     <div className="w-full max-w-5xl m-auto mt-[72px] flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <p className="text-[#C4D4E3] text-lg font-nunito">Publicações</p>
-        <p className="text-[#7B96B2] text-sm font-nunito">6 publicações</p>
+        <p className="text-[#C4D4E3] text-lg font-nunito">{qtyPost <= 1 ? "Publicação" : "Publicações"}</p>
+        <p className="text-[#7B96B2] text-sm font-nunito">
+          {qtyPost} {qtyPost <= 1 ? "Publicação" : "Publicações"}
+        </p>
       </div>
 
       <input

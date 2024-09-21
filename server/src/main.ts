@@ -6,6 +6,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Habilitar CORS
+  app.enableCors({
+    origin: '*', // Substitua pelo domínio permitido
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
   // Configuração do Swagger
   const config = new DocumentBuilder()
     .setTitle('School Fiap API')
