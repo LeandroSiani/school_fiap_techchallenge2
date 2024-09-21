@@ -68,6 +68,7 @@ export class PostController {
 
   @Get('query/:query')
   async findByQuery(@Param('query') query: string) {
+    console.log(query);
     return this.postService.findByQuery(query);
   }
 
