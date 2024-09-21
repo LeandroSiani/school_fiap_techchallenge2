@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from 'src/post/entities/post.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class PostService {
@@ -52,8 +52,9 @@ export class PostService {
   }
 
   async findByQuery(query: string): Promise<Post[]> {
+    console.log(query);
     return this.postRepository.find({
-      where: [{ title: query }, { content: query }],
+      where: [{ title: ILike(`%${query}%`) }, { content: ILike(`%${query}%`) }],
     });
   }
 }
