@@ -62,12 +62,12 @@ export class PostController {
   }
 
   @Get(':id')
-  async findOne(id: number) {
+  async findOne(@Param('id') id: number) {
     return this.postService.findOne(id);
   }
 
   @Get('query/:query')
-  async findByQuery(query: string) {
+  async findByQuery(@Param('query') query: string) {
     return this.postService.findByQuery(query);
   }
 
