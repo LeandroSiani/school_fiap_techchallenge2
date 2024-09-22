@@ -1,6 +1,6 @@
 "use client";
 
-import { CaretLeft, Student, CalendarDot, XCircle, Trash, Pencil } from "@phosphor-icons/react/dist/ssr";
+import { CaretLeft, Student, CalendarDot, XCircle, Trash, Pencil, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 import {
@@ -18,11 +18,20 @@ import { formatDateCustom } from "@/hook/formatedDate";
 interface HeaderTitlePostBlogProps {
   seePost?: boolean;
   title: string;
+  date?: Date;
   publishDate: Date;
+  isPublished?: boolean;
 }
 
-export default function HeaderTitlePostBlog({ seePost, title, publishDate }: HeaderTitlePostBlogProps) {
+export default function HeaderTitlePostBlog({
+  seePost,
+  title,
+  date,
+  publishDate,
+  isPublished,
+}: HeaderTitlePostBlogProps) {
   const params = usePathname();
+  const displayDate = publishDate || date || new Date();
 
   return (
     <div className="w-full max-w-5xl m-auto flex flex-col gap-5 bg-[#0B1B2B] py-8 px-10 rounded-[10px] mt-[-80px] shadow-custom relative">
@@ -74,12 +83,12 @@ export default function HeaderTitlePostBlog({ seePost, title, publishDate }: Hea
           </div>
           <div className="flex items-center gap-2">
             <CalendarDot size={18} color="#3A536B" />
-            <p className="text-[#7B96B2] text-base font-nunito ">{formatDateCustom(publishDate)}</p>
+            <p className="text-[#7B96B2] text-base font-nunito ">{formatDateCustom(displayDate)}</p>
           </div>
           {seePost && (
             <div className="flex items-center gap-2">
-              <XCircle size={18} color="#6b3a3a" />
-              <p className="text-[#7B96B2] text-base font-nunito ">Não publicado</p>
+              {isPublished ? <CheckCircle size={18} color="#16a34a" /> : <XCircle size={18} color="#6b3a3a" />}
+              <p className="text-[#7B96B2] text-base font-nunito ">{isPublished ? "Publicado" : "Não publicado"}</p>
             </div>
           )}
         </div>

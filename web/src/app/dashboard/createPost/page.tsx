@@ -1,3 +1,5 @@
+"use serrver";
+import { createPost } from "@/app/actions/createPost";
 import Header from "@/app/components/header";
 import { CaretLeft } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
@@ -18,7 +20,7 @@ export default function NewPost() {
         <div className="w-full max-w-3xl m-auto mt-8 ">
           <div className="w-full">
             <h1 className="text-2xl font-coda text-[#E7EDF4]">Criar novo post</h1>
-            <form className="mt-4">
+            <form className="mt-4" action={createPost}>
               <label htmlFor="title" className="block text-sm font-medium text-[#7B96B2]">
                 Título
               </label>

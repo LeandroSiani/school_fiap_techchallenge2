@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito, Coda } from "next/font/google";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const nunito = Nunito({
   variable: "--nunito",
@@ -25,7 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${nunito.variable} ${coda.variable} antialiased`}>{children}</body>
+      <body className={`${nunito.variable} ${coda.variable} antialiased`}>
+        <ToastContainer />
+
+        {children}
+      </body>
     </html>
   );
 }
