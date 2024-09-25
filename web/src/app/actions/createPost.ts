@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 export async function createPost(formData: FormData) {
   "use server";
 
@@ -19,4 +21,8 @@ export async function createPost(formData: FormData) {
     },
     body: JSON.stringify(rawFormData),
   });
+
+  if (response.ok) {
+    redirect("/dashboard");
+  }
 }

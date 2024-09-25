@@ -6,8 +6,7 @@ interface seePostAdminProps {
 }
 
 export async function seePostAdmin({ params }: seePostAdminProps) {
-  console.log("🚀 ~ seePostAdmin ~ params:", params);
-  ("use server");
+  "use server";
 
   const username = "admin";
   const password = "supersecret";

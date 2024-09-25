@@ -1,6 +1,4 @@
-import { redirect } from "next/navigation";
-
-export async function deletePostAdmin(id: number) {
+export async function publishPostAdmin(id: number) {
   "use client";
 
   const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
@@ -8,17 +6,13 @@ export async function deletePostAdmin(id: number) {
 
   const credentials = btoa(`${username}:${password}`);
 
-  const response = await fetch(`http://localhost:3000/posts/${id}`, {
-    method: "DELETE",
+  const response = await fetch(`http://localhost:3000/posts/publish/${id}`, {
+    method: "PUT",
     headers: {
       Authorization: "Basic " + credentials,
       "Content-Type": "application/json",
     },
   });
-
-  if (response.ok) {
-    redirect("/dashboard");
-  }
 
   return response;
 }

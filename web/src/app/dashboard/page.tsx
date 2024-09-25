@@ -1,6 +1,7 @@
 "use client";
 
-import { Eye, FileText, Pencil, Plus, Trash, X } from "@phosphor-icons/react/dist/ssr";
+import { Suspense, useEffect, useState } from "react";
+import { Eye, FileText, Pencil, Plus,  X } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Header from "../components/header";
@@ -15,25 +16,39 @@ import {
 } from "@/components/ui/dialog";
 import { IPost } from "../@types/post.interface";
 import dayjs from "dayjs";
-import { Suspense, useState } from "react";
-import { deletePostAdmin } from "../actions/deletePostAdmin";
 import DeleteDialog from "../components/DeleteDialog";
+import { toast } from "react-toastify";
+import PublishDialog from "../components/publishDialog";
 
-export default async function dashboard() {
-  const [isOpenDelete, setIsOpenDelete] = useState(false);
+export default function dashboard() {
+  const [posts, setPosts] = useState<IPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const username = "admin";
-  const password = "supersecret";
+  const fetchPosts = async () => {
+    const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
+    const password = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    const credentials = btoa(`${username}:${password}`);
 
-  const credentials = btoa(`${username}:${password}`);
+    try {
+      const response = await fetch("http://localhost:3000/posts/admin", {
+        cache: "no-cache",
+        headers: { Authorization: "Basic " + credentials },
+      });
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {
+      console.error("Erro ao buscar posts:", error);
+      toast.error("Erro ao buscar posts.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const data = await fetch("http://localhost:3000/posts/admin", {
-    cache: "no-cache",
-    headers: { Authorization: "Basic " + credentials },
-  });
-  const posts = await data.json();
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
-  const rows = posts.map((post: IPost) => {
+  const rows = posts?.map((post: IPost) => {
     return {
       id: post.id,
       title: post.title,
@@ -76,27 +91,7 @@ export default async function dashboard() {
           </div>
         ) : (
           <div className="flex items-center h-full">
-            <Dialog>
-              <DialogTrigger>
-                <X size={18} color="#ef4444" />
-              </DialogTrigger>
-              <DialogContent className="bg-[#0B1B2B] w-72 border-transparent">
-                <DialogHeader>
-                  <DialogTitle className="text-[#AFC2D4] text-xl font-nunito">
-                    Você tem certeza que deseja publicar o post?
-                  </DialogTitle>
-                  <DialogDescription className="pt-10 flex justify-between ">
-                    <DialogClose asChild>
-                      <button type="button" className="text-[#7B96B2] text-sm font-nunito">
-                        Cancelar
-                      </button>
-                    </DialogClose>
-
-                    <button className="text-[#7B96B2] text-sm font-nunito">Publicar</button>
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+            <PublishDialog postId={params.row.id} onPublish={fetchPosts} />
           </div>
         ),
     },
@@ -107,7 +102,7 @@ export default async function dashboard() {
       flex: 1,
       renderCell: (params) => (
         <div className="flex items-center justify-center h-full">
-          <DeleteDialog postId={params.value} />
+          <DeleteDialog postId={params.value} onDelete={fetchPosts}/>
         </div>
       ),
     },

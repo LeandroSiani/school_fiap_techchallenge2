@@ -1,22 +1,15 @@
 "use client";
 
-import { CaretLeft, Student, CalendarDot, XCircle, Trash, Pencil, CheckCircle } from "@phosphor-icons/react/dist/ssr";
+import { CaretLeft, Student, CalendarDot, XCircle, Pencil, CheckCircle } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { usePathname } from "next/navigation";
 import { formatDateCustom } from "@/hook/formatedDate";
+import DeleteDialog from "./DeleteDialog";
 
 interface HeaderTitlePostBlogProps {
   seePost?: boolean;
+  id: number;
   title: string;
   date?: Date;
   publishDate: Date;
@@ -25,6 +18,7 @@ interface HeaderTitlePostBlogProps {
 
 export default function HeaderTitlePostBlog({
   seePost,
+  id,
   title,
   date,
   publishDate,
@@ -43,27 +37,7 @@ export default function HeaderTitlePostBlog({
 
         {seePost && (
           <div className="flex items-center gap-3">
-            <Dialog>
-              <DialogTrigger>
-                <Trash size={18} color="#ef4444" />
-              </DialogTrigger>
-              <DialogContent className="bg-[#0B1B2B] w-72">
-                <DialogHeader>
-                  <DialogTitle className="text-[#AFC2D4] text-xl font-nunito">
-                    Você tem certeza que deseja deletar?
-                  </DialogTitle>
-                  <DialogDescription className="pt-10 flex justify-between ">
-                    <DialogClose asChild>
-                      <button type="button" className="text-[#7B96B2] text-sm font-nunito">
-                        Cancelar
-                      </button>
-                    </DialogClose>
-
-                    <button className="text-[#7B96B2] text-sm font-nunito">Deletar</button>
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+           <DeleteDialog postId={id} />
             <Link href="/dashboard/editPost/1" className="flex items-center gap-2 text-yellow-500">
               <Pencil size={18} />
             </Link>

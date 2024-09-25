@@ -15,7 +15,7 @@ import { Trash } from "@phosphor-icons/react/dist/ssr";
 import { deletePostAdmin } from "../actions/deletePostAdmin";
 import { toast } from "react-toastify";
 
-export default function DeleteDialog({ postId }: any) {
+export default function DeleteDialog({ postId, onDelete }: { postId: number; onDelete?: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,6 +26,7 @@ export default function DeleteDialog({ postId }: any) {
       if (response.ok) {
         setIsOpen(false);
         toast.success("Post deletado com sucesso.");
+        onDelete && onDelete(); 
       } else {
         toast.error("Falha ao deletar o post.");
       }

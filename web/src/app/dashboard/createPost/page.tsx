@@ -1,10 +1,9 @@
-"use serrver";
 import { createPost } from "@/app/actions/createPost";
 import Header from "@/app/components/header";
 import { CaretLeft } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
-export default function NewPost() {
+export default function NewPost() {  
   return (
     <div>
       <Header title="Novo Post" height={200} />

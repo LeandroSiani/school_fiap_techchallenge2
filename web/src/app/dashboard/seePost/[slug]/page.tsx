@@ -11,6 +11,7 @@ export default async function SeePost({ params }: { params: { slug: string } }) 
 
       <HeaderTitlePostBlog
         seePost
+        id={posts.id}
         title={posts.title}
         date={posts.date}
         publishDate={posts.publishDate}
