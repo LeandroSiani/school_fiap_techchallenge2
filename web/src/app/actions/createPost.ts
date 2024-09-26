@@ -2,9 +2,9 @@ import { redirect } from "next/navigation";
 
 export async function createPost(formData: FormData) {
   "use server";
-
-  const username = "admin";
-  const password = "supersecret";
+  
+  const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
+  const password = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
   const credentials = btoa(`${username}:${password}`);
 

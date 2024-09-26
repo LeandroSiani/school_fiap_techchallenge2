@@ -28,15 +28,18 @@ export default function EditPostForm({ initialPost, slug }: EditPostFormProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const form = e.target as HTMLFormElement;
+
     let newForm = {
-      title: e.target[0].value,
-      content: e.target[1].value,
+      title: (form[0] as HTMLInputElement).value,  
+      content: (form[1] as HTMLTextAreaElement).value,
     };
 
     const response = await editPostAdmin(newForm, slug);
 
     if (response.ok) {
       toast.success("Post editado com sucesso!");
+      router.push("/dashboard");
     }
   };
 

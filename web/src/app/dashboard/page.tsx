@@ -63,26 +63,34 @@ export default function dashboard() {
   });
 
   const columns: GridColDef[] = [
-    { headerName: "Titulo", field: "title", width: 150, flex: 1 },
-    { headerName: "Conteúdo post", field: "content", width: 150, flex: 1 },
+    { headerName: "Titulo", field: "title", minWidth: 150, flex: 1 },
+    { headerName: "Conteúdo post", field: "content", minWidth: 150, flex: 1 },
     {
       headerName: "Data post criado",
       field: "date",
-      width: 150,
+      minWidth: 150,
       flex: 1,
       renderCell: (params) => (params.value != null ? dayjs(params.value).format("DD/MM/YY HH:mm") : "--"),
     },
     {
       headerName: "Data publicação",
       field: "publishDate",
-      width: 150,
+      minWidth: 150,
       flex: 1,
-      renderCell: (params) => (params.value != null ? dayjs(params.value).format("DD/MM/YY HH:mm") : "--"),
+      renderCell: (params) => {
+        const date = params.value;
+        
+        if (date && dayjs(date).isValid() && date !== '1970-01-01T00:00:00.000Z') {
+          return dayjs(date).format("DD/MM/YY HH:mm");
+        } else {
+          return "--";  
+        }
+      }
     },
     {
       headerName: "Já foi publicado?",
       field: "isPublished",
-      width: 60,
+      minWidth: 90,
       flex: 1,
       renderCell: (params) =>
         params.value ? (
@@ -140,14 +148,14 @@ export default function dashboard() {
     <Suspense fallback={<div>Loading...</div>}>
       <Header title="DASHBOARD BLOG" height={220} />
 
-      <div className="w-full max-w-5xl m-auto mt-4 flex justify-end ">
+      <div className="w-full max-w-5xl m-auto mt-4 flex justify-end px-10">
         <Link href="dashboard/createPost" className="flex items-center gap-2 ">
           <Plus size={12} color="#3294F8" />
           <p className="text-[#3294F8] text-xs font-nunito font-bold">NOVO POST</p>
         </Link>
       </div>
 
-      <div className="w-full max-w-5xl m-auto pt-8">
+      <div className="w-full max-w-5xl m-auto pt-8 px-10">
         <DataGrid
           className="dark:bg-gray-800"
           sx={{

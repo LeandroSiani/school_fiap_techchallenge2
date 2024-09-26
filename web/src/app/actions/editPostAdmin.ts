@@ -1,6 +1,6 @@
 export async function editPostAdmin(newForm: { title: string; content: string }, slug: string) {
-  const username = "admin";
-  const password = "supersecret";
+  const username = process.env.NEXT_PUBLIC_ADMIN_USERNAME;
+  const password = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
   const credentials = btoa(`${username}:${password}`);
 

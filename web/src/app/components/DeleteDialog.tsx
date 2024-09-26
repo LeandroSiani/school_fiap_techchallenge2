@@ -1,4 +1,3 @@
-// components/DeleteDialog.jsx
 "use client";
 
 import React, { useState } from "react";
@@ -14,28 +13,28 @@ import {
 import { Trash } from "@phosphor-icons/react/dist/ssr";
 import { deletePostAdmin } from "../actions/deletePostAdmin";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function DeleteDialog({ postId, onDelete }: { postId: number; onDelete?: () => void }) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
     setIsLoading(true);
-    try {
-      const response = await deletePostAdmin(postId);
-      if (response.ok) {
-        setIsOpen(false);
-        toast.success("Post deletado com sucesso.");
-        onDelete && onDelete(); 
-      } else {
-        toast.error("Falha ao deletar o post.");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Ocorreu um erro ao deletar o post.");
-    } finally {
-      setIsLoading(false);
+
+    const response = await deletePostAdmin(postId);
+      
+    if (response.ok) {
+      setIsOpen(false);
+      toast.success("Post deletado com sucesso.");
+      onDelete && onDelete();
+
+      router.push("/dashboard");
+    } else {
+      toast.error("Falha ao deletar o post.");
     }
+    setIsLoading(false);
   };
 
   return (

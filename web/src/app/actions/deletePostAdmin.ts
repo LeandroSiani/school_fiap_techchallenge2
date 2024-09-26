@@ -16,9 +16,5 @@ export async function deletePostAdmin(id: number) {
     },
   });
 
-  if (response.ok) {
-    redirect("/dashboard");
-  }
-
   return response;
 }

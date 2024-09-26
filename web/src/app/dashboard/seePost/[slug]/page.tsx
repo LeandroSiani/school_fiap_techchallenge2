@@ -9,18 +9,20 @@ export default async function SeePost({ params }: { params: { slug: string } }) 
     <div>
       <Header title="" height={200} />
 
-      <HeaderTitlePostBlog
-        seePost
-        id={posts.id}
-        title={posts.title}
-        date={posts.date}
-        publishDate={posts.publishDate}
-        isPublished={posts.isPublished}
-      />
+      <div className="px-10">
+        <HeaderTitlePostBlog
+          seePost
+          id={posts.id}
+          title={posts.title}
+          date={posts.date}
+          publishDate={posts.publishDate}
+          isPublished={posts.isPublished}
+          />
 
-      <main className="w-full max-w-5xl m-auto mt-8">
-        <p className="text-[#AFC2D4] text-base font-nunito">{posts.content}</p>
-      </main>
+        <main className="w-full max-w-5xl m-auto mt-8">
+          <p className="text-[#AFC2D4] text-base font-nunito">{posts.content}</p>
+        </main>
+      </div>
     </div>
   );
 }

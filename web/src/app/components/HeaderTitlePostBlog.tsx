@@ -38,9 +38,11 @@ export default function HeaderTitlePostBlog({
         {seePost && (
           <div className="flex items-center gap-3">
            <DeleteDialog postId={id} />
-            <Link href="/dashboard/editPost/1" className="flex items-center gap-2 text-yellow-500">
+           {!isPublished && (
+            <Link href={`/dashboard/editPost/${id}`} className="flex items-center gap-2 text-yellow-500">
               <Pencil size={18} />
             </Link>
+          )}
           </div>
         )}
       </div>
@@ -50,7 +52,7 @@ export default function HeaderTitlePostBlog({
           <h2 className="text-[#E7EDF4] text-2xl font-nunito font-bold">{title}</h2>
         </div>
 
-        <div className="flex items-center gap-8">
+        <div className="flex-col  md:flex-row flex md:items-center gap-8">
           <div className="flex items-center gap-2">
             <Student size={18} color="#3A536B" />
             <p className="text-[#7B96B2] text-base font-nunito ">Professor</p>

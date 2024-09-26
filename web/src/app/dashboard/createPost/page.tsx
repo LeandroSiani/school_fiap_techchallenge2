@@ -8,14 +8,14 @@ export default function NewPost() {
     <div>
       <Header title="Novo Post" height={200} />
 
-      <div className="w-full max-w-3xl m-auto mt-4 ">
+      <div className="w-full max-w-3xl m-auto mt-4 px-10">
         <Link href="/dashboard" className="flex items-center gap-2 ">
           <CaretLeft size={12} color="#3294F8" />
           <p className="text-[#3294F8] text-xs font-nunito font-bold">VOLTAR</p>
         </Link>
       </div>
 
-      <main className="w-full">
+      <main className="w-full px-10">
         <div className="w-full max-w-3xl m-auto mt-8 ">
           <div className="w-full">
             <h1 className="text-2xl font-coda text-[#E7EDF4]">Criar novo post</h1>

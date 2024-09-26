@@ -17,9 +17,7 @@ import { publishPostAdmin } from "../actions/publishPostAdmin";
 
 export default function PublishDialog({ postId, onPublish }: { postId: number; onPublish: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  console.log(postId);
-  
+  const [isLoading, setIsLoading] = useState(false);  
 
   const handlePublish = async () => {
     setIsLoading(true);

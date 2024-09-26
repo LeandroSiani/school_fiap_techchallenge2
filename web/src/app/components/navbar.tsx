@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { signup } from "../actions/auth";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const params = usePathname();
@@ -25,18 +26,40 @@ export default function Navbar() {
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
     const result = await signup(formData);
-
+    console.log("🚀 ~ handleSubmit ~ result:", result);
+  
     if (result?.errors) {
       // Handle errors
-      console.log(result.errors);
+      const errorMessages = new Set<string>();
+  
+      if (Array.isArray(result.errors)) {
+        result.errors.forEach((error) => {
+          errorMessages.add(error.message); 
+        });
+      } else if (typeof result.errors === 'object') {
+        Object.keys(result.errors).forEach((key) => {
+          const errorMessagesForKey = result.errors[key as keyof typeof result.errors]; // Type assertion
+          if (Array.isArray(errorMessagesForKey)) {
+            errorMessagesForKey.forEach((message) => {
+              errorMessages.add(message); 
+            });
+          }
+        });
+      } else {
+        console.error("Unexpected error format:", result.errors);
+      }
+  
+      errorMessages.forEach((message) => {
+        toast.error(message);
+      });
+
     } else if (result?.success) {
-      // Save the token to localStorage
       localStorage.setItem("authToken", result.token);
-      // Redirect or show success message
       console.log("Form submitted successfully");
       router.push("/dashboard");
     }
   };
+  
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -66,7 +89,7 @@ export default function Navbar() {
           </DialogTrigger>
           <DialogContent className="bg-[#0B1B2B] w-72 border-transparent">
             <DialogHeader>
-              <DialogTitle className="text-[#AFC2D4] text-2xl font-nunito">Login</DialogTitle>
+              <DialogTitle className="text-[#AFC2D4] text-2xl font-nunito">Acesso Professor</DialogTitle>
               <DialogDescription className="pt-10 ">
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col gap-[1px]">
