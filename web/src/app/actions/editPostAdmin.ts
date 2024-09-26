@@ -8,7 +8,6 @@ export async function editPostAdmin(newForm: { title: string; content: string },
     title: newForm.title,
     content: newForm.content,
     date: new Date(),
-    publishDate: null,
     isPublished: false,
   };
 

@@ -8,7 +8,7 @@ export default function NewPost() {
     <div>
       <Header title="Novo Post" height={200} />
 
-      <div className="w-full max-w-3xl m-auto mt-4 px-10">
+      <div className="w-full max-w-3xl m-auto mt-4 px-10 md:px-0">
         <Link href="/dashboard" className="flex items-center gap-2 ">
           <CaretLeft size={12} color="#3294F8" />
           <p className="text-[#3294F8] text-xs font-nunito font-bold">VOLTAR</p>

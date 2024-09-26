@@ -15,19 +15,21 @@ import {
 import { signup } from "../actions/auth";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { set } from "zod";
 
 export default function Navbar() {
   const params = usePathname();
   const router = useRouter();
   const [isLogged, setIsLogged] = useState(false);
+  const [isLoadingLogin, setIsLoadingLogin] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
     const result = await signup(formData);
-    console.log("🚀 ~ handleSubmit ~ result:", result);
-  
+    setIsLoadingLogin(true);
+
     if (result?.errors) {
       // Handle errors
       const errorMessages = new Set<string>();
@@ -53,10 +55,13 @@ export default function Navbar() {
         toast.error(message);
       });
 
+      setIsLoadingLogin(false);
+
     } else if (result?.success) {
       localStorage.setItem("authToken", result.token);
       console.log("Form submitted successfully");
       router.push("/dashboard");
+      setIsLoadingLogin(false);
     }
   };
   
@@ -123,7 +128,7 @@ export default function Navbar() {
                       </button>
                     </DialogClose>
                     <button type="submit" className="bg-[#3294F8] text-white py-2 px-4 rounded-md hover:bg-[#2673c1]">
-                      Entrar
+                      {isLoadingLogin ? "Carregando..." : "Entrar"}
                     </button>
                   </div>
                 </form>

@@ -39,7 +39,7 @@ export default function Home({ initialPosts }: { initialPosts: IPost[] }) {
         <SearchPost qtyPost={posts?.length} setSearchPost={setSearchPost} />
 
         {posts?.length > 0 ? (
-          <div className="w-full max-w-5xl m-auto mt-12 grid grid-cols-2 gap-8 pb-12 items-stretch">
+          <div className="w-full max-w-5xl m-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 pb-12 items-stretch">
             {posts?.map((post: IPost) => (
               <Post key={post.id} {...post} />
             ))}
