@@ -37,6 +37,12 @@ export default function RootLayout() {
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="+not-found" />
+        <Stack.Screen
+          name="login/index"
+          options={{
+            header: () => <></>,
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

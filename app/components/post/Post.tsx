@@ -18,7 +18,7 @@ export default function Post({ post }: PostProps) {
   };
 
   return (
-    <TouchableOpacity style={styles.link} onPress={handlePress}>
+    <TouchableOpacity onPress={handlePress}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{post.title}</Text>
@@ -52,18 +52,18 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "#E7EDF4",
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: "nunitoBold",
     fontWeight: "bold",
   },
   date: {
     color: "#7B96B2",
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: "nunitoRegular",
   },
   content: {
     color: "#AFC2D4",
-    fontSize: 16,
+    fontSize: 12,
     fontFamily: "nunitoRegular",
   },
 });
