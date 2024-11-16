@@ -8,8 +8,8 @@ interface SearchPostProps {
 
 export default function SearchPost({
   qtyPost,
-}: //   setSearchPost,
-SearchPostProps) {
+  setSearchPost,
+}: SearchPostProps) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -25,7 +25,7 @@ SearchPostProps) {
         style={styles.input}
         placeholder="Buscar conteúdo"
         placeholderTextColor="#AFC2D4"
-        // onChangeText={(text) => setSearchPost(text)}
+        onChangeText={(text) => setSearchPost(text)}
       />
     </View>
   );

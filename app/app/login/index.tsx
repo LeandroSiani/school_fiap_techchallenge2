@@ -26,7 +26,7 @@ export default function Login() {
       await AsyncStorage.setItem("userToken", token);
 
       Alert.alert("Sucesso", "Login realizado com sucesso!");
-      router.navigate("/(dashboard)"); // Navegue para a página desejada após o login
+      router.navigate("/dashboard"); // Navegue para a página desejada após o login
     } else {
       Alert.alert("Erro", "Usuário ou senha incorretos.");
     }
