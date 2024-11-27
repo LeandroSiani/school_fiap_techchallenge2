@@ -47,7 +47,10 @@ export default function NewPost() {
       <Header title="Novo Post" />
 
       <View style={styles.main}>
-        <TouchableOpacity style={styles.backButton} onPress={() => router.back}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
           <Ionicons name="caret-back" size={12} color="#3294F8" />
           <Text style={styles.backText}>VOLTAR</Text>
         </TouchableOpacity>

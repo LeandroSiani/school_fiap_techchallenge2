@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,16 +6,45 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Alert,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Header } from "@/components/header/Header";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
+import { updatePost } from "@/redux/postsSlice";
+import { editPostAdmin } from "@/services/editPostAdmin";
 
 export default function EditPost() {
-  const navigation = useNavigation();
+  const { id } = useLocalSearchParams();
+  const route = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handleCreatePost = () => {
-    // Ação para criar post
+  const post = useSelector((state: RootState) =>
+    state.posts.posts.find((p) => p.id.toString() === id.toString())
+  );
+
+  const [title, setTitle] = useState(post?.title || "");
+  const [content, setContent] = useState(post?.content || "");
+
+  const handleEditPost = async () => {
+    if (!title || !content) {
+      Alert.alert("Erro", "Preencha todos os campos.");
+      return;
+    }
+
+    try {
+      await editPostAdmin({ title, content }, id as string);
+
+      dispatch(updatePost({ id: id as string, title, content }));
+
+      Alert.alert("Sucesso", "Post atualizado com sucesso!");
+      route.push("/dashboard?refresh=true");
+    } catch (error) {
+      Alert.alert("Erro", "Ocorreu um erro ao atualizar o post.");
+      console.error("Erro ao atualizar post:", error);
+    }
   };
 
   return (
@@ -24,8 +53,9 @@ export default function EditPost() {
 
       <View style={styles.main}>
         <TouchableOpacity
+          accessibilityLabel="Botão voltar"
           style={styles.backButton}
-          onPress={() => navigation.goBack()}
+          onPress={() => route.back()}
         >
           <Ionicons name="caret-back" size={12} color="#3294F8" />
           <Text style={styles.backText}>VOLTAR</Text>
@@ -39,6 +69,8 @@ export default function EditPost() {
             style={styles.input}
             placeholder="Título do post"
             placeholderTextColor="#AFC2D4"
+            value={title}
+            onChangeText={setTitle}
           />
 
           <Text style={[styles.label, { marginTop: 16 }]}>Conteúdo</Text>
@@ -48,10 +80,12 @@ export default function EditPost() {
             placeholderTextColor="#AFC2D4"
             multiline
             numberOfLines={5}
+            value={content}
+            onChangeText={setContent}
           />
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleCreatePost}>
+            <TouchableOpacity style={styles.button} onPress={handleEditPost}>
               <Text style={styles.buttonText}>Editar post</Text>
             </TouchableOpacity>
           </View>
@@ -69,18 +103,6 @@ const styles = StyleSheet.create({
   main: {
     paddingHorizontal: 10,
     marginTop: 20,
-  },
-  header: {
-    backgroundColor: "#0B1B2B",
-    height: 200,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  headerTitle: {
-    color: "#3294F8",
-    fontSize: 22,
-    fontWeight: "bold",
   },
   backButton: {
     flexDirection: "row",

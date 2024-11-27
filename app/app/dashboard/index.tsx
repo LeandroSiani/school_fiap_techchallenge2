@@ -11,47 +11,78 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Octicons from "@expo/vector-icons/Octicons";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { usePathname, useRouter } from "expo-router";
+import { Link, usePathname, useRouter } from "expo-router";
 import { listPostsAdmin } from "@/services/listPostsAdmin";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { setPosts } from "@/redux/postsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import DeleteConfirmationModal from "@/components/deleteConfirmationModal/DeleteConfirmationModal";
+import Feather from "@expo/vector-icons/Feather";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import { publishPostAdmin } from "@/services/publishPostAdmin";
+import PublishDialogModal from "@/components/publishDialogModal/PublishDialogModal";
+
+type ModalState = {
+  open: boolean;
+  id: string;
+};
 
 export default function Dashboard() {
   const router = useRouter();
-  const pathname = usePathname();
-  const [posts, setPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const posts = useSelector((state: RootState) => state.posts.posts);
+  const dispatch = useDispatch<AppDispatch>();
+  const [openModal, setOpenModal] = useState<ModalState>({
+    open: false,
+    id: "",
+  });
+  const [openPublishModal, setOpenPublishModal] = useState({
+    open: false,
+    id: 0,
+  });
+
+  const fetchPosts = async () => {
+    try {
+      const data = await listPostsAdmin();
+      dispatch(setPosts(data));
+    } catch (error) {
+      console.error("Erro ao buscar posts:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchAdminPosts = async () => {
-      try {
-        const data = await listPostsAdmin();
-        setPosts(data);
-      } catch (err: any) {
-        Alert.alert("Erro ao buscar posts:", err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAdminPosts();
+    fetchPosts();
   }, []);
+
+  const handlePublishAdmin = async (id: number) => {
+    setOpenPublishModal({ open: true, id });
+  };
 
   const renderItem = ({ item }: any) => (
     <View style={styles.card}>
       <View style={styles.header}>
         <View style={styles.buttons}>
-          <TouchableOpacity
-            onPress={() => router.navigate("/dashboard/editPost")}
-          >
-            <Octicons name="pencil" size={24} color="#eab308" />
+          <TouchableOpacity onPress={() => handlePublishAdmin(item.id)}>
+            {item.isPublished ? (
+              <FontAwesome6 name="circle-check" size={24} color="#10b981" />
+            ) : (
+              <Feather name="x-circle" size={24} color="#ef4444" />
+            )}
           </TouchableOpacity>
+          {!item.isPublished && (
+            <Link href={`/dashboard/editPost/${item.id}`}>
+              <Octicons name="pencil" size={24} color="#eab308" />
+            </Link>
+          )}
           <TouchableOpacity
             onPress={() => router.navigate("/dashboard/seePost")}
           >
             <Ionicons name="eye-outline" size={24} color="#3b82f6" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setOpenModal({ open: true, id: item.id })}
+          >
             <Ionicons name="trash-outline" size={24} color="#ef4444" />
           </TouchableOpacity>
         </View>
@@ -83,7 +114,7 @@ export default function Dashboard() {
       <View style={styles.contentInfos}>
         <Text style={styles.textLabel}>Já foi publicado?</Text>
         <Text style={styles.textContent}>
-          `{item.isPublished ? "Sim" : "Não"}`
+          {item.isPublished ? "Sim" : "Não"}
         </Text>
       </View>
     </View>
@@ -107,6 +138,19 @@ export default function Dashboard() {
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingBottom: 20 }}
+        />
+
+        <DeleteConfirmationModal
+          open={openModal.open}
+          close={() => setOpenModal({ open: false, id: "" })}
+          id={openModal.id}
+        />
+
+        <PublishDialogModal
+          open={openPublishModal.open}
+          close={() => setOpenPublishModal({ open: false, id: "" })}
+          postId={openPublishModal.id}
+          onPublish={fetchPosts}
         />
       </SafeAreaView>
     </>

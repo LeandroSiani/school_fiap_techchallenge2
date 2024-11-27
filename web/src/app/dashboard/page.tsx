@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import { Eye, FileText, Pencil, Plus,  X } from "@phosphor-icons/react/dist/ssr";
+import { Eye, FileText, Pencil, Plus, X } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Header from "../components/header";
@@ -70,7 +70,10 @@ export default function dashboard() {
       field: "date",
       minWidth: 150,
       flex: 1,
-      renderCell: (params) => (params.value != null ? dayjs(params.value).format("DD/MM/YY HH:mm") : "--"),
+      renderCell: (params) =>
+        params.value != null
+          ? dayjs(params.value).format("DD/MM/YY HH:mm")
+          : "--",
     },
     {
       headerName: "Data publicação",
@@ -79,13 +82,17 @@ export default function dashboard() {
       flex: 1,
       renderCell: (params) => {
         const date = params.value;
-        
-        if (date && dayjs(date).isValid() && date !== '1970-01-01T00:00:00.000Z') {
+
+        if (
+          date &&
+          dayjs(date).isValid() &&
+          date !== "1970-01-01T00:00:00.000Z"
+        ) {
           return dayjs(date).format("DD/MM/YY HH:mm");
         } else {
-          return "--";  
+          return "--";
         }
-      }
+      },
     },
     {
       headerName: "Já foi publicado?",
@@ -110,7 +117,7 @@ export default function dashboard() {
       flex: 1,
       renderCell: (params) => (
         <div className="flex items-center justify-center h-full">
-          <DeleteDialog postId={params.value} onDelete={fetchPosts}/>
+          <DeleteDialog postId={params.value} onDelete={fetchPosts} />
         </div>
       ),
     },
@@ -151,7 +158,9 @@ export default function dashboard() {
       <div className="w-full max-w-5xl m-auto mt-4 flex justify-end px-10">
         <Link href="dashboard/createPost" className="flex items-center gap-2 ">
           <Plus size={12} color="#3294F8" />
-          <p className="text-[#3294F8] text-xs font-nunito font-bold">NOVO POST</p>
+          <p className="text-[#3294F8] text-xs font-nunito font-bold">
+            NOVO POST
+          </p>
         </Link>
       </div>
 

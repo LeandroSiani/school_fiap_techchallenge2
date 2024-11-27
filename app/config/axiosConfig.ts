@@ -2,9 +2,6 @@ import axios, { AxiosInstance } from "axios";
 
 const api: AxiosInstance = axios.create({
   baseURL: "http://192.168.1.120:3000",
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 api.interceptors.response.use(
