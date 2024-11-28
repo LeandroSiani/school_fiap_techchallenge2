@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import {
   AntDesign,
@@ -9,6 +9,8 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import { formatDateCustom } from "@/hooks/formatedDate";
+import DeleteConfirmationModal from "../deleteConfirmationModal/DeleteConfirmationModal";
+import PublishDialogModal from "../publishDialogModal/PublishDialogModal";
 
 interface HeaderTitlePostBlogProps {
   seePost?: boolean;
@@ -29,6 +31,11 @@ export default function HeaderTitlePostBlog({
 }: HeaderTitlePostBlogProps) {
   const router = useRouter();
   const displayDate = publishDate || date || new Date();
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleDeletePost = async () => {
+    setOpenModal(true);
+  };
 
   return (
     <View style={styles.container}>
@@ -43,10 +50,15 @@ export default function HeaderTitlePostBlog({
 
         {seePost && (
           <View style={styles.actionIcons}>
-            <Ionicons name="trash-outline" size={18} color="#ef4444" />
+            <TouchableOpacity
+              onPress={() => handleDeletePost()}
+              style={styles.editButton}
+            >
+              <Ionicons name="trash-outline" size={18} color="#ef4444" />
+            </TouchableOpacity>
             {!isPublished && (
               <TouchableOpacity
-                // onPress={() => router.navigate("/dashboard/editPost", { id })}
+                onPress={() => router.push(`/dashboard/editPost/${id}`)}
                 style={styles.editButton}
               >
                 <Octicons name="pencil" size={18} color="#eab308" />
@@ -83,6 +95,13 @@ export default function HeaderTitlePostBlog({
           )}
         </View>
       </View>
+
+      <DeleteConfirmationModal
+        open={openModal}
+        close={() => setOpenModal(false)}
+        router={() => router.navigate("/dashboard")}
+        id={id}
+      />
     </View>
   );
 }

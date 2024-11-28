@@ -44,11 +44,12 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="+not-found" />
+          <Stack.Screen name="seePost/index" />
           <Stack.Screen
             name="login/index"
-            options={{
-              header: () => <></>,
-            }}
+            // options={{
+            //   header: () => <></>,
+            // }}
           />
         </Stack>
       </ThemeProvider>

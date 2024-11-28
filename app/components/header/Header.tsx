@@ -38,7 +38,9 @@ export const Header = ({ title }: HeaderProps) => {
   };
 
   const handleLogout = async () => {
-    if (isAuthenticated) {
+    console.log("logout");
+
+    if (isAuthenticated && pathname == "/") {
       router.navigate("/dashboard");
     } else {
       await AsyncStorage.removeItem("userToken");

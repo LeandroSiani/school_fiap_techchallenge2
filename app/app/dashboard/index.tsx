@@ -26,7 +26,7 @@ import PublishDialogModal from "@/components/publishDialogModal/PublishDialogMod
 
 type ModalState = {
   open: boolean;
-  id: string;
+  id: number;
 };
 
 export default function Dashboard() {
@@ -35,7 +35,7 @@ export default function Dashboard() {
   const dispatch = useDispatch<AppDispatch>();
   const [openModal, setOpenModal] = useState<ModalState>({
     open: false,
-    id: "",
+    id: 0,
   });
   const [openPublishModal, setOpenPublishModal] = useState({
     open: false,
@@ -76,7 +76,12 @@ export default function Dashboard() {
             </Link>
           )}
           <TouchableOpacity
-            onPress={() => router.navigate("/dashboard/seePost")}
+            onPress={() =>
+              router.push({
+                pathname: "/dashboard/seePostAdmin",
+                params: { id: item.id },
+              })
+            }
           >
             <Ionicons name="eye-outline" size={24} color="#3b82f6" />
           </TouchableOpacity>
@@ -136,19 +141,19 @@ export default function Dashboard() {
         <FlatList
           data={posts}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           contentContainerStyle={{ paddingBottom: 20 }}
         />
 
         <DeleteConfirmationModal
           open={openModal.open}
-          close={() => setOpenModal({ open: false, id: "" })}
+          close={() => setOpenModal({ open: false, id: 0 })}
           id={openModal.id}
         />
 
         <PublishDialogModal
           open={openPublishModal.open}
-          close={() => setOpenPublishModal({ open: false, id: "" })}
+          close={() => setOpenPublishModal({ open: false, id: 0 })}
           postId={openPublishModal.id}
           onPublish={fetchPosts}
         />

@@ -1,20 +1,23 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { IPost } from "@/@types/post.interface";
 import { formatDateCustom } from "@/hooks/formatedDate";
+import { useRouter } from "expo-router";
 
 interface PostProps {
   post: IPost;
 }
 
 export default function Post({ post }: PostProps) {
-  const navigation = useNavigation();
+  const router = useRouter();
 
   const handlePress = () => {
     console.log("Post", post);
 
-    // navigation.navigate("PostDetails", { postId: post.id });
+    router.push({
+      pathname: "/dashboard/seePost",
+      params: { id: post.id },
+    });
   };
 
   return (

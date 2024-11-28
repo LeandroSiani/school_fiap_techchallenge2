@@ -15,21 +15,26 @@ import { useDispatch } from "react-redux";
 interface DeleteConfirmationModalProps {
   open: boolean;
   close: () => void;
-  id?: string;
+  id?: number;
+  router?: () => void;
 }
 
 export default function DeleteConfirmationModal({
   open,
   close,
   id,
+  router,
 }: DeleteConfirmationModalProps) {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleDelete = async () => {
     try {
-      await deletePostAdmin(id as string);
-      dispatch(deletePost(id as string));
+      await deletePostAdmin(id as number);
+      dispatch(deletePost(id as number));
       Alert.alert("Sucesso", "Post deletado com sucesso!");
+      if (router) {
+        router();
+      }
       close();
     } catch (error) {
       Alert.alert("Erro", "Não foi possível deletar o post.");

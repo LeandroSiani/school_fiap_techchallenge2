@@ -3,7 +3,7 @@ import { NEXT_PUBLIC_ADMIN_USERNAME, NEXT_PUBLIC_ADMIN_PASSWORD } from "@env";
 
 export async function editPostAdmin(
   newForm: { title: string; content: string },
-  slug: string
+  slug: number
 ) {
   const username = NEXT_PUBLIC_ADMIN_USERNAME;
   const password = NEXT_PUBLIC_ADMIN_PASSWORD;

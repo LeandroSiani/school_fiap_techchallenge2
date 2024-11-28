@@ -18,13 +18,13 @@ import { editPostAdmin } from "@/services/editPostAdmin";
 
 export default function EditPost() {
   const { id } = useLocalSearchParams();
+  const postId = Number(id);
   const route = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
   const post = useSelector((state: RootState) =>
-    state.posts.posts.find((p) => p.id.toString() === id.toString())
+    state.posts.posts.find((p) => p.id === postId)
   );
-
   const [title, setTitle] = useState(post?.title || "");
   const [content, setContent] = useState(post?.content || "");
 
@@ -35,9 +35,9 @@ export default function EditPost() {
     }
 
     try {
-      await editPostAdmin({ title, content }, id as string);
+      await editPostAdmin({ title, content }, postId);
 
-      dispatch(updatePost({ id: id as string, title, content }));
+      dispatch(updatePost({ id: postId, title, content }));
 
       Alert.alert("Sucesso", "Post atualizado com sucesso!");
       route.push("/dashboard?refresh=true");

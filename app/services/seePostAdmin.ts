@@ -2,7 +2,7 @@ import api from "@/config/axiosConfig";
 import { NEXT_PUBLIC_ADMIN_USERNAME, NEXT_PUBLIC_ADMIN_PASSWORD } from "@env";
 
 interface seePostAdminProps {
-  slug: string;
+  slug: number;
 }
 
 export async function seePostAdmin({ slug }: seePostAdminProps): Promise<any> {
