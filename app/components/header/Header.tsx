@@ -17,10 +17,8 @@ export const Header = ({ title }: HeaderProps) => {
   useEffect(() => {
     const checkAuth = async () => {
       const token = await AsyncStorage.getItem("userToken");
-      if (token) {
+      if (token !== null) {
         setIsAuthenticated(true);
-      } else {
-        router.navigate("/login");
       }
     };
 
@@ -38,7 +36,7 @@ export const Header = ({ title }: HeaderProps) => {
   };
 
   const handleLogout = async () => {
-    console.log("logout");
+    console.log("pathname", pathname);
 
     if (isAuthenticated && pathname == "/") {
       router.navigate("/dashboard");

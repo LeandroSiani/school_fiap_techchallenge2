@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import { useRouter } from "expo-router";
+import { usePathname, useRouter } from "expo-router";
 import {
   AntDesign,
   FontAwesome5,
@@ -30,20 +30,27 @@ export default function HeaderTitlePostBlog({
   isPublished,
 }: HeaderTitlePostBlogProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const displayDate = publishDate || date || new Date();
   const [openModal, setOpenModal] = useState(false);
+  const PostAluno = pathname === "/seePost" ? true : false;
 
   const handleDeletePost = async () => {
     setOpenModal(true);
   };
 
+  const handleBack = () => {
+    if (PostAluno) {
+      router.navigate("/");
+    } else {
+      router.navigate("/dashboard");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.navigate("/dashboard")}
-          style={styles.backButton}
-        >
+        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
           <Ionicons name="caret-back" size={12} color="#3294F8" />
           <Text style={styles.backText}>VOLTAR</Text>
         </TouchableOpacity>

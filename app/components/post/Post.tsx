@@ -15,7 +15,7 @@ export default function Post({ post }: PostProps) {
     console.log("Post", post);
 
     router.push({
-      pathname: "/dashboard/seePost",
+      pathname: "/seePost",
       params: { id: post.id },
     });
   };

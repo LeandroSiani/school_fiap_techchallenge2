@@ -2,28 +2,33 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import HeaderTitlePostBlog from "@/components/headerTitlePostBlog/HeaderTitlePostBlog";
 import { Header } from "@/components/header/Header";
+import { seePostAdmin } from "@/services/seePostAdmin";
+import { useLocalSearchParams } from "expo-router";
 
 export default function SeePostAdmin() {
+  const { id } = useLocalSearchParams();
+  const postId = Number(id);
+
   const [post, setPost] = useState({
     id: 1,
-    title: "Primeiro Post",
-    content: "Conteúdo do primeiro post.",
-    date: new Date("2024-11-07"),
-    publishDate: new Date("2024-11-08"),
+    title: "",
+    content: "",
+    date: new Date(),
+    publishDate: new Date(),
     isPublished: true,
   });
 
-  //   useEffect(() => {
-  //     const fetchPost = async () => {
-  //       const postData = await seePostAdmin({ params: { slug } });
-  //       setPost(postData);
-  //     };
-  //     fetchPost();
-  //   }, [slug]);
+  useEffect(() => {
+    const fetchPost = async () => {
+      const postData = await seePostAdmin({ slug: postId });
+      setPost(postData);
+    };
+    fetchPost();
+  }, [postId]);
 
-  //   if (!post) {
-  //     return <Text>Loading...</Text>;
-  //   }
+  if (!post) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -31,7 +36,6 @@ export default function SeePostAdmin() {
 
       <View style={styles.contentContainer}>
         <HeaderTitlePostBlog
-          seePost
           id={post.id}
           title={post.title}
           date={post.date}
