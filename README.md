@@ -15,7 +15,6 @@
 - [Zod](https://zod.dev/)
 - [Jest](https://jestjs.io/)
 
-
   ## Tecnologies Frontend
   
 
@@ -25,7 +24,6 @@
 - [Radix-UI](https://www.radix-ui.com/)
 - [Zod](https://zod.dev/)
 - [React-Toastify](https://www.npmjs.com/package/react-toastify)
-- 
 
   ## Tecnologies App
   
