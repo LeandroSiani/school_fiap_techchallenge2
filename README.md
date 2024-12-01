@@ -143,7 +143,6 @@ $ npx expo start
 - E direto do site do Expo, você consegue baixar tanto para IOS e Android, quanto para seus desktop ou laptop.
 
 - [EXPO GO](https://expo.dev/go)
-- 
 
 ### Login de acesso do professor: 
 ```http  
