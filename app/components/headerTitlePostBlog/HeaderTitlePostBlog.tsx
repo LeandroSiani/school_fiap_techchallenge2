@@ -15,7 +15,7 @@ import PublishDialogModal from "../publishDialogModal/PublishDialogModal";
 interface HeaderTitlePostBlogProps {
   seePost?: boolean;
   id: number;
-  title: string;
+  title?: string;
   date?: Date;
   publishDate: Date;
   isPublished?: boolean;
@@ -76,7 +76,7 @@ export default function HeaderTitlePostBlog({
       </View>
 
       <View style={styles.content}>
-        <Text style={styles.title}>{title}</Text>
+        {title && <Text style={styles.title}>{title}</Text>}
 
         <View style={styles.infoContainer}>
           <View style={styles.infoItem}>

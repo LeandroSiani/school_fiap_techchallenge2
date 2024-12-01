@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from "axios";
+import { IP_CONFIG_AXIOS_BASE_URL } from "@env";
 
 const api: AxiosInstance = axios.create({
-  baseURL: "http://192.168.1.120:3000",
+  baseURL: `${IP_CONFIG_AXIOS_BASE_URL}:3000`,
 });
 
 api.interceptors.response.use(

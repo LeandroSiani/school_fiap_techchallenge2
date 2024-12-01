@@ -4,6 +4,7 @@ import HeaderTitlePostBlog from "@/components/headerTitlePostBlog/HeaderTitlePos
 import { Header } from "@/components/header/Header";
 import { seePostAdmin } from "@/services/seePostAdmin";
 import { useLocalSearchParams } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SeePostAdmin() {
   const { id } = useLocalSearchParams();
@@ -31,29 +32,29 @@ export default function SeePostAdmin() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Header title="" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#071422" }}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Header title={post.title} />
 
-      <View style={styles.contentContainer}>
-        <HeaderTitlePostBlog
-          id={post.id}
-          title={post.title}
-          date={post.date}
-          publishDate={post.publishDate}
-          isPublished={post.isPublished}
-        />
+        <View style={styles.contentContainer}>
+          <HeaderTitlePostBlog
+            id={post.id}
+            date={post.date}
+            publishDate={post.publishDate}
+            isPublished={post.isPublished}
+          />
 
-        <View style={styles.mainContent}>
-          <Text style={styles.postContent}>{post.content}</Text>
+          <View style={styles.mainContent}>
+            <Text style={styles.postContent}>{post.content}</Text>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     backgroundColor: "#071422",
   },
   contentContainer: {

@@ -1,6 +1,3 @@
-import { deletePost } from "@/redux/postsSlice";
-import { AppDispatch } from "@/redux/store";
-import { deletePostAdmin } from "@/services/deletePost";
 import React from "react";
 import {
   Modal,
@@ -11,6 +8,9 @@ import {
   Alert,
 } from "react-native";
 import { useDispatch } from "react-redux";
+import { deletePost } from "@/redux/postsSlice";
+import { AppDispatch } from "@/redux/store";
+import { deletePostAdmin } from "@/services/deletePost";
 
 interface DeleteConfirmationModalProps {
   open: boolean;
@@ -56,19 +56,19 @@ export default function DeleteConfirmationModal({
             Esta ação não poderá ser desfeita.
           </Text>
 
-          <View style={styles.buttonGroup}>
+          <View style={styles.actions}>
+            <TouchableOpacity
+              style={[styles.button, styles.cancelButton]}
+              onPress={close}
+            >
+              <Text style={styles.cancelText}>Cancelar</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity
               style={[styles.button, styles.deleteButton]}
               onPress={handleDelete}
             >
               <Text style={styles.deleteText}>Deletar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, styles.cancelButton]}
-              onPress={() => close()}
-            >
-              <Text style={styles.cancelText}>Cancelar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -78,11 +78,6 @@ export default function DeleteConfirmationModal({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -90,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
-    backgroundColor: "white",
+    backgroundColor: "#0B1B2B",
     padding: 20,
     borderRadius: 10,
     width: "80%",
@@ -98,40 +93,42 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
+    color: "#AFC2D4",
+    textAlign: "center",
+    marginBottom: 20,
     fontFamily: "nunitoBold",
   },
   modalText: {
     fontSize: 14,
-    color: "#666",
-    marginBottom: 20,
+    color: "#7B96B2",
     textAlign: "center",
+    marginBottom: 20,
     fontFamily: "nunitoRegular",
   },
-  buttonGroup: {
-    gap: 10,
+  actions: {
+    flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
   },
   button: {
+    flex: 1,
     padding: 10,
-    marginHorizontal: 5,
     borderRadius: 8,
     alignItems: "center",
+    marginHorizontal: 5,
   },
   cancelButton: {
     backgroundColor: "transparent",
   },
   cancelText: {
-    color: "#333",
+    color: "#7B96B2",
     fontFamily: "nunitoBold",
   },
   deleteButton: {
-    backgroundColor: "#ef4444",
+    backgroundColor: "#EF4444",
   },
   deleteText: {
-    color: "#fff",
+    color: "#FFF",
     fontFamily: "nunitoBold",
   },
 });
