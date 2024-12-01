@@ -127,6 +127,16 @@ $ cd app
 $ npm install
 ````
 
+- Na pasta raiz, tem um arquivo chamado ".env.exemple", remove o exemple, deixamos assim ".env", agora abre o arquivo, dentro vai ter preencha ele com os dados abaixo.
+
+### Exemplo
+
+```http  
+NEXT_PUBLIC_ADMIN_USERNAME=admin
+NEXT_PUBLIC_ADMIN_PASSWORD=supersecret
+IP_CONFIG_AXIOS_BASE_URL=http://000.000.0.000 (SEU IP)
+```
+
 - Agora com tudo instalado, basta acessar o terminal e iniciar o projeto
 
 ```bash
