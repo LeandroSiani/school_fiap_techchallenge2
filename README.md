@@ -25,6 +25,14 @@
 - [Radix-UI](https://www.radix-ui.com/)
 - [Zod](https://zod.dev/)
 - [React-Toastify](https://www.npmjs.com/package/react-toastify)
+- 
+
+  ## Tecnologies App
+  
+
+- [EXPO](https://expo.dev/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Redux](https://redux-toolkit.js.org/)
 
 
 ## 💻 Requisitos para o projeto rodar
@@ -106,6 +114,36 @@ $ npm run dev
 ````
 
 - Projeto frontend, vai abrir na [url](http://localhost:3001).
+
+
+## Conheça nosso aplicativo em React Native
+- Com o backend implementado, acesso ao aplicativo é bem simples, volte para pasta padrão
+  
+```bash
+$ cd app
+````
+
+- Dentro das pasta app, vamos instalar as dependencias do aplicativo
+  
+```bash
+$ npm install
+````
+
+- Agora com tudo instalado, basta acessar o terminal e iniciar o projeto
+
+```bash
+$ npx expo start
+````
+
+- Com o projeto de App existe 2 meios de visualizar o projeto, você  pode instalar o App Expo Go no seu celular e apontar a câmera para o qrcode. Segue os links para baixar o app.
+  
+- [IOS](https://itunes.apple.com/app/apple-store/id982107779)
+- [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&referrer=www)
+
+- E direto do site do Expo, você consegue baixar tanto para IOS e Android, quanto para seus desktop ou laptop.
+
+- [EXPO GO](https://expo.dev/go)
+- 
 
 ### Login de acesso do professor: 
 ```http  
